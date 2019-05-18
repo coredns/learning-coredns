@@ -1,7 +1,8 @@
 # dnscached
 
 A simple example of using CoreDNS as a library. This embeds only the `bind`,
-`cache` and `forward` plugins, and only allows configuration from flags.
+`cache`, `errors`, `forward` and `log` plugins, and only allows configuration
+from flags.
 
 ## Usage
 
@@ -36,7 +37,7 @@ A simple example of using CoreDNS as a library. This embeds only the `bind`,
 
 One or more forwarding destinations. Each can be a file in /etc/resolv.conf
 format or a destination IP or IP:PORT, with or without a with or without a
-protocol (leading "PROTO://"), with "dns" and "tls" as the supported PROTO
+protocol (leading `PROTO://`), with `dns` and `tls` as the supported `PROTO`
 values. If omitted, "dns" is assumed as the protocol. The default destination is
 /etc/resolv.conf.
 
