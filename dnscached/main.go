@@ -71,14 +71,7 @@ func main() {
 
 	flag.CommandLine = setupFlags()
 	flag.Parse()
-
-	if bindIP == "" {
-		bindIP = "127.0.0.1 ::1"
-	}
 	destinations = flag.Args()
-	if len(destinations) == 0 {
-		destinations = []string{"/etc/resolv.conf"}
-	}
 
 	log.SetOutput(os.Stdout)
 	log.SetFlags(0) // Set to 0 because we're doing our own time, with timezone
@@ -113,6 +106,12 @@ func main() {
 
 // corefile generates the Corefile based on the flags
 func corefile() (caddy.Input, error) {
+	if bindIP == "" {
+		bindIP = "127.0.0.1 ::1"
+	}
+	if len(destinations) == 0 {
+		destinations = []string{"/etc/resolv.conf"}
+	}
 
 	var b bytes.Buffer
 	_, err := b.WriteString(fmt.Sprintf(".:%d {\n errors\n bind %s\n", port, bindIP))
