@@ -4,25 +4,13 @@ import (
 	"fmt"
 	"os"
 
-	_ "github.com/coredns/coredns/plugin/bind"
-	_ "github.com/coredns/coredns/plugin/cache"
-	_ "github.com/coredns/coredns/plugin/errors"
-	_ "github.com/coredns/coredns/plugin/forward"
-	_ "github.com/coredns/coredns/plugin/log"
-
 	"github.com/mholt/caddy"
-)
-
-const (
-	AppVersion = "1.0.0"
-	AppName    = "dnscached"
 )
 
 func init() {
 	caddy.Quiet = true // don't show init stuff from caddy
-
-	caddy.AppName = AppName
-	caddy.AppVersion = AppVersion
+	caddy.AppName = "dnscached"
+	caddy.AppVersion = "1.0.0"
 }
 
 func main() {
