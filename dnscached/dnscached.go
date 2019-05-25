@@ -34,7 +34,7 @@ func parseFlags() *dnscached {
 	f.BoolVar(&d.printVersion, "version", false, "Show version")
 	f.BoolVar(&d.dryRun, "dry-run", false, "Prints out the internally generated Corefile and exits")
 	f.BoolVar(&d.enableLog, "log", false, "Enable query logging")
-	f.StringVar(&d.bindIP, "bind", "", "`IP(s)` to which to bind (default '127.0.0.1 ::1')")
+	f.StringVar(&d.bindIP, "bind", "127.0.0.1 ::1", "`IP(s)` to which to bind")
 	f.UintVar(&d.port, "port", 5300, "Local port `number` to use")
 	f.UintVar(&d.successSize, "success", 9984, "Number of success cache `entries`")
 	f.UintVar(&d.denialSize, "denial", 9984, "Number of denial cache `entries`")
@@ -58,6 +58,9 @@ values. If omitted, "dns" is assumed as the protocol. The default destination is
 	flag.CommandLine = f
 	flag.Parse()
 	d.destinations = flag.Args()
+	if len(d.destinations) == 0 {
+		d.destinations = []string{"/etc/resolv.conf"}
+	}
 
 	return d
 }
@@ -78,13 +81,6 @@ func (d *dnscached) handleDryRun(input caddy.Input) {
 
 // corefile generates the Corefile based on the flags
 func (d *dnscached) corefile() (caddy.Input, error) {
-	if d.bindIP == "" {
-		d.bindIP = "127.0.0.1 ::1"
-	}
-	if len(d.destinations) == 0 {
-		d.destinations = []string{"/etc/resolv.conf"}
-	}
-
 	var b bytes.Buffer
 	_, err := b.WriteString(fmt.Sprintf(".:%d {\n errors\n bind %s\n", d.port, d.bindIP))
 	if err != nil {
