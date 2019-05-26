@@ -37,7 +37,13 @@ func setup(c *caddy.Controller) error {
 func parse(c *caddy.Controller) (*onlyone, error) {
 	o := &onlyone{types: typeMap{dns.TypeA: true, dns.TypeAAAA: true}}
 
-	for c.Next() { // onlyone
+	found := false
+	for c.Next() {
+		// onlyone should just be in the server block once
+		if found {
+			return nil, plugin.ErrOnce
+		}
+		found = true
 		args := c.RemainingArgs()
 		if len(args) == 0 {
 			o.zones = []string{"."} // match any zone

@@ -26,6 +26,7 @@ func TestParse(t *testing.T) {
 			[]string{"."}},
 		// fails
 		{"onlyone {\n types foo\n}", true, nil, []string{"."}},
+		{"onlyone\nonlyone\n", true, nil, []string{"."}},
 	}
 	for i, test := range tests {
 		c := caddy.NewTestController("dns", test.input)
