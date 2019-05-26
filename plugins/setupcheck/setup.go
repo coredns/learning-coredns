@@ -16,7 +16,7 @@ func init() {
 }
 
 func setup(c *caddy.Controller) error {
-	log.Printf("START: setup")
+	log.Printf("START : setup")
 	err := parse(c)
 	if err != nil {
 		return plugin.Error("setupcheck", err)
@@ -26,15 +26,14 @@ func setup(c *caddy.Controller) error {
 }
 
 func parse(c *caddy.Controller) error {
-	log.Printf("START: parse")
+	log.Printf("START : parse")
 	for c.Next() {
-		log.Printf("START: parse/setupcheck")
 		args := c.RemainingArgs()
-		log.Printf("       parse/setupcheck args %v", args)
+		log.Printf("START : parse/setupcheck args %v", args)
 		for c.NextBlock() {
-			log.Printf("      parse/setupcheck option %s", c.Val())
+			log.Printf("          parse/setupcheck block %s, args %v", c.Val(), c.RemainingArgs())
 		}
-		log.Printf("FINISH: parse/setupcheck")
+		log.Printf("FINISH: parse/setupcheck args %v", args)
 	}
 	log.Printf("FINISH: parse")
 	return nil

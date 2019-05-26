@@ -8,18 +8,18 @@ import (
 
 func TestParse(t *testing.T) {
 	tests := []struct {
-		input     string
+		input string
 	}{
-		{`.:5300 {
-			setupcheck a {
+		{`setupcheck a {
 				foo
 				bar
 				foobar foo bar
-			}
-			setupcheck b {
-				bar bar bar
-			}
-			setupcheck c
+		}
+		setupcheck b {
+			bar bar bar
+		}
+		setupcheck c
+		setupcheck d {
 		}`},
 	}
 	for i, test := range tests {
