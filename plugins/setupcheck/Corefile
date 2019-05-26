@@ -1,0 +1,13 @@
+.:5300 {
+  setupcheck
+  setupcheck a {
+     foo
+     bar
+     foobar foo bar
+  }
+  setupcheck b {
+     hi there
+  }
+  setupcheck c
+  setupcheck d
+}
