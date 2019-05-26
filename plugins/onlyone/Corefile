@@ -1,0 +1,22 @@
+.:5300 {
+  reload 5s
+  onlyone
+  log
+
+  template IN A multi.example.com {
+    answer "{{ .Name }} 60 IN A 10.10.10.1"
+    answer "{{ .Name }} 60 IN A 10.10.10.2"
+    answer "{{ .Name }} 60 IN A 10.10.10.3"
+    answer "{{ .Name }} 60 IN A 10.10.10.4"
+    answer "{{ .Name }} 60 IN A 10.10.10.5"
+  }
+
+  template IN A single.example.com {
+    answer "{{ .Name }} 60 IN A 10.10.10.1"
+  }
+
+  template ANY ANY {
+    rcode NXDOMAIN
+  }
+
+}

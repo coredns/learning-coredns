@@ -3,15 +3,19 @@ package onlyone
 import (
 	"errors"
 	"fmt"
+	"math/rand"
 	"strings"
 
 	"github.com/coredns/coredns/core/dnsserver"
 	"github.com/coredns/coredns/plugin"
+	clog "github.com/coredns/coredns/plugin/pkg/log"
 
 	"github.com/mholt/caddy"
 
 	"github.com/miekg/dns"
 )
+
+var log = clog.NewWithPlugin("onlyone")
 
 func init() {
 	caddy.RegisterPlugin("onlyone", caddy.Plugin{
@@ -35,7 +39,8 @@ func setup(c *caddy.Controller) error {
 }
 
 func parse(c *caddy.Controller) (*onlyone, error) {
-	o := &onlyone{types: typeMap{dns.TypeA: true, dns.TypeAAAA: true}}
+	o := &onlyone{types: typeMap{dns.TypeA: true, dns.TypeAAAA: true},
+		pick: rand.Intn}
 
 	found := false
 	for c.Next() {

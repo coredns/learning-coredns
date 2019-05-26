@@ -2,7 +2,7 @@
 
 ## Name
 
-*onlyone* - Randomly chooses a single RR of each type in the response.
+*onlyone* - Randomly chooses a single RR of each specified type in the response.
 
 ## Description
 
@@ -14,5 +14,19 @@ is getting in the way.
 ## Syntax
 
 ~~~
-onlyone [ZONES ...]
+onlyone [ZONES ...] {
+  types TYPES
+}
+~~~
+
+* **ZONES** is the zones to which this plugin applies. If omitted, they default to `.`.
+* **TYPES** is a list of DNS types to which this plugin applies. If `types` is omitted, it
+  will apply to A and AAAA records only.
+
+## Examples
+
+~~~
+onlyone example.com {
+  types A SRV AAAA
+}
 ~~~
