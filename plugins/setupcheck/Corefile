@@ -1,13 +1,25 @@
 .:5300 {
-  setupcheck
-  setupcheck a {
+  setupcheck .:5300
+  setupcheck .:5300:a {
      foo
      bar
      foobar foo bar
   }
-  setupcheck b {
+  setupcheck .:5300:b {
      hi there
   }
-  setupcheck c
-  setupcheck d
+  setupcheck .:5300:c
+  setupcheck .:5300:d
+}
+
+example.com:5300 {
+  setupcheck example.com:5300 {
+    foo bar
+  }
+  setupcheck example.com:5300:a
+}
+
+.:5301 {
+  setupcheck .:5301
+  setupcheck .:5301:a
 }
