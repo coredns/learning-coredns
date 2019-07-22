@@ -1,11 +1,8 @@
 package onlyone
 
 import (
-	"context"
 	"testing"
 
-	"github.com/coredns/coredns/plugin"
-	"github.com/coredns/coredns/plugin/pkg/dnstest"
 	"github.com/coredns/coredns/plugin/test"
 
 	"github.com/miekg/dns"
@@ -52,8 +49,14 @@ func TestTrimRecords(t *testing.T) {
 		o := &onlyone{types: test.types, pick: test.pick}
 		o.trimRecords(req)
 
-		if !sameAnswer(test.answer, req.Answer) {
-			t.Errorf("Test %d: Expected %v, but got %v", i, test.answer, req.Answer)
+		if len(test.answer) != len(req.Answer) {
+			t.Errorf("Test %d: Expected %d answers, but got %d", i, len(test.answer), len(req.Answer))
+			continue
+		}
+		for j, a := range req.Answer {
+			if test.answer[j].String() != a.String() {
+				t.Errorf("Test %d: Expected answer %d to be %v, but got %v", i, j, test.answer[j], a)
+			}
 		}
 	}
 }
