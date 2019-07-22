@@ -32,17 +32,21 @@ func parseFlags() *dnscached {
 	f := flag.NewFlagSet(os.Args[0], flag.ExitOnError)
 	f.StringVar(&caddy.PidFile, "pidfile", "", "File `path` to write pid file")
 	f.BoolVar(&d.printVersion, "version", false, "Show version")
-	f.BoolVar(&d.dryRun, "dry-run", false, "Prints out the internally generated Corefile and exits")
+	f.BoolVar(&d.dryRun, "dry-run", false,
+		"Prints out the internally generated Corefile and exits")
 	f.BoolVar(&d.enableLog, "log", false, "Enable query logging")
 	f.StringVar(&d.bindIP, "bind", "127.0.0.1 ::1", "`IP(s)` to which to bind")
 	f.UintVar(&d.port, "port", 5300, "Local port `number` to use")
 	f.UintVar(&d.successSize, "success", 9984, "Number of success cache `entries`")
 	f.UintVar(&d.denialSize, "denial", 9984, "Number of denial cache `entries`")
-	f.UintVar(&d.prefetchAmount, "prefetch", 10, "Number of times a query must be made each minute to qualify for prefetch")
-	f.UintVar(&d.ttl, "ttl", 60, "Maximum `seconds` to cache records, zero disables caching")
+	f.UintVar(&d.prefetchAmount, "prefetch",
+		10, "Number of times a query must be made each minute to qualify for prefetch")
+	f.UintVar(&d.ttl, "ttl", 60,
+		"Maximum `seconds` to cache records, zero disables caching")
 
 	f.Usage = func() {
-		fmt.Fprintf(os.Stderr, "USAGE\n-----\n%s [ options ] [ destinations ]\n", os.Args[0])
+		fmt.Fprintf(os.Stderr,
+			"USAGE\n-----\n%s [ options ] [ destinations ]\n", os.Args[0])
 		fmt.Fprintf(os.Stderr, "\nOPTIONS\n-------\n")
 		flag.PrintDefaults()
 		fmt.Fprintf(os.Stderr, "\nDESTINATIONS\n------------")
