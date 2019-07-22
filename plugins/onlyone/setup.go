@@ -44,34 +44,41 @@ func parse(c *caddy.Controller) (*onlyone, error) {
 
 	found := false
 	for c.Next() {
-		// onlyone should just be in the server block once
+		// onlyone should just be in the server block once.
 		if found {
 			return nil, plugin.ErrOnce
 		}
 		found = true
+
+		// parse the zone list, normalizing each to a FQDN, and
+		// using the zones from the server block if none are given.
 		args := c.RemainingArgs()
 		if len(args) == 0 {
-			o.zones = []string{"."} // match any zone
-		} else {
-			o.zones = args
+			o.zones = make([]string, len(c.ServerBlockKeys))
+			copy(o.zones, c.ServerBlockKeys)
 		}
+		for _, str := range args {
+			o.zones = append(o.zones, plugin.Host(str).Normalize())
+		}
+
 		for c.NextBlock() {
 			switch c.Val() {
 			case "types":
 				args := c.RemainingArgs()
 				if len(args) == 0 {
-					return nil, errors.New("at least one type must be listed with types")
+					return nil, errors.New(
+						"at least one type must be listed with types")
 				}
 				o.types = make(typeMap, len(args))
 				for _, a := range args {
 					t, ok := dns.StringToType[strings.ToUpper(a)]
 					if !ok {
-						return nil, fmt.Errorf("%s is not a valid type", a)
+						return nil, fmt.Errorf("not a valid type %q", a)
 					}
 					o.types[t] = true
 				}
 			default:
-				return nil, fmt.Errorf("%s is an invalid option", c.Val())
+				return nil, fmt.Errorf("invalid option %q", c.Val())
 			}
 		}
 	}
