@@ -37,16 +37,18 @@ func parseFlags() *dnscached {
 	f.BoolVar(&d.enableLog, "log", false, "Enable query logging")
 	f.StringVar(&d.bindIP, "bind", "127.0.0.1 ::1", "`IP(s)` to which to bind")
 	f.UintVar(&d.port, "port", 5300, "Local port `number` to use")
-	f.UintVar(&d.successSize, "success", 9984, "Number of success cache `entries`")
+	f.UintVar(&d.successSize, "success", 9984,
+		"Number of success cache `entries`")
 	f.UintVar(&d.denialSize, "denial", 9984, "Number of denial cache `entries`")
 	f.UintVar(&d.prefetchAmount, "prefetch",
-		10, "Number of times a query must be made each minute to qualify for prefetch")
+		10, "Times a query must be made per minute to qualify for prefetch")
 	f.UintVar(&d.ttl, "ttl", 60,
 		"Maximum `seconds` to cache records, zero disables caching")
 
 	f.Usage = func() {
 		fmt.Fprintf(os.Stderr,
-			"USAGE\n-----\n%s [ options ] [ destinations ]\n", os.Args[0])
+			"USAGE\n-----\n%s [ options ] [ destinations ]\n",
+			os.Args[0])
 		fmt.Fprintf(os.Stderr, "\nOPTIONS\n-------\n")
 		flag.PrintDefaults()
 		fmt.Fprintf(os.Stderr, "\nDESTINATIONS\n------------")
@@ -86,7 +88,8 @@ func (d *dnscached) handleDryRun(input caddy.Input) {
 // corefile generates the Corefile based on the flags
 func (d *dnscached) corefile() (caddy.Input, error) {
 	var b bytes.Buffer
-	_, err := b.WriteString(fmt.Sprintf(".:%d {\n errors\n bind %s\n", d.port, d.bindIP))
+	_, err := b.WriteString(fmt.Sprintf(".:%d {\n errors\n bind %s\n",
+		d.port, d.bindIP))
 	if err != nil {
 		return nil, err
 	}
