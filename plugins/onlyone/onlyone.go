@@ -22,7 +22,8 @@ type onlyone struct {
 func (o *onlyone) Name() string { return "onlyone" }
 
 // ServeDNS implements the plugin.Handle interface.
-func (o *onlyone) ServeDNS(ctx context.Context, w dns.ResponseWriter, r *dns.Msg) (int, error) {
+func (o *onlyone) ServeDNS(ctx context.Context, w dns.ResponseWriter,
+	r *dns.Msg) (int, error) {
 	// The request struct is a convenience struct.
 	state := request.Request{W: w, Req: r}
 
