@@ -67,13 +67,15 @@ func parse(c *caddy.Controller) (*onlyone, error) {
 				args := c.RemainingArgs()
 				if len(args) == 0 {
 					return nil, errors.New(
-						"at least one type must be listed with types")
+						"at least one type must be listed")
 				}
 				o.types = make(typeMap, len(args))
 				for _, a := range args {
 					t, ok := dns.StringToType[strings.ToUpper(a)]
 					if !ok {
-						return nil, fmt.Errorf("not a valid type %q", a)
+						return nil,
+							fmt.Errorf("invalid type %q",
+								a)
 					}
 					o.types[t] = true
 				}
