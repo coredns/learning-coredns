@@ -12,7 +12,7 @@ import (
 	_ "github.com/coredns/coredns/plugin/forward"
 	_ "github.com/coredns/coredns/plugin/log"
 
-	"github.com/mholt/caddy"
+	"github.com/coredns/caddy"
 )
 
 const (

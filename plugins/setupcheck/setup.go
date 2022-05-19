@@ -5,7 +5,7 @@ import (
 
 	"github.com/coredns/coredns/plugin"
 
-	"github.com/mholt/caddy"
+	"github.com/coredns/caddy"
 )
 
 func init() {

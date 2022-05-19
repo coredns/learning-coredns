@@ -10,7 +10,7 @@ import (
 	"github.com/coredns/coredns/plugin"
 	clog "github.com/coredns/coredns/plugin/pkg/log"
 
-	"github.com/mholt/caddy"
+	"github.com/coredns/caddy"
 
 	"github.com/miekg/dns"
 )

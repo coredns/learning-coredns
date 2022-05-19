@@ -3,7 +3,7 @@ package setupcheck
 import (
 	"testing"
 
-	"github.com/mholt/caddy"
+	"github.com/coredns/caddy"
 )
 
 func TestParse(t *testing.T) {

@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mholt/caddy"
+	"github.com/coredns/caddy"
 )
 
 func init() {
 	caddy.Quiet = true // don't show init stuff from caddy
 	caddy.AppName = "dnscached"
-	caddy.AppVersion = "1.0.0"
+	caddy.AppVersion = "1.0.1"
 }
 
 func main() {
